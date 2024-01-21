@@ -6,8 +6,11 @@ exports.createProduct = async (req, res) => {
   try {
     const doc = await product.save();
     res.status(201).json(doc);
-  } catch (err) {
-    res.status(400).json({ err, Error: err.message });
+  } catch (error) {
+    console.log("error", error);
+    res
+      .status(400)
+      .json({ alert: "product is not created", Error: error.message });
   }
 };
 

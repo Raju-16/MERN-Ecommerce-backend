@@ -4,49 +4,49 @@ const productSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "title is required"],
-      unique: [true, "this title is already exists"],
+      required: true,
+      unique: true,
     },
     description: {
       type: String,
-      required: [true, "description is required"],
+      required: true,
     },
     price: {
       type: Number,
-      min: [1, "wrong min price"],
-      max: [200000, "wrong max price"],
+      min: 1,
+      max: 200000,
     },
     discountPercentage: {
       type: Number,
-      min: [1, "wrong min discount"],
-      max: [99, "wrong max discount"],
+      min: 1,
+      max: 99,
     },
     rating: {
       type: Number,
-      min: [0, "wrong min rating"],
-      max: [5, "wrong max price"],
+      min: 0,
+      max: 5,
       default: 0,
     },
     stock: {
       type: Number,
-      min: [0, "wrong min stock"],
+      min: 0,
       default: 0,
     },
     brand: {
       type: String,
-      required: [true, "brand is required"],
+      required: true,
     },
     category: {
       type: String,
-      required: [true, "category is required"],
+      required: true,
     },
     thumbnail: {
       type: String,
-      required: [true, "thumbnail is required"],
+      required: true,
     },
     images: {
       type: [String],
-      required: [true, "product images is required"],
+      required: true,
     },
     deleted: { type: Boolean, default: false },
   },
