@@ -4,12 +4,12 @@ const brandSchema = new mongoose.Schema(
   {
     label: {
       type: String,
-      required: [true, "label is required"],
+      required: true,
       unique: true,
     },
     value: {
       type: String,
-      required: [true, "value is required"],
+      required: true,
       unique: true,
     },
   },

@@ -4,8 +4,10 @@ exports.fetchCategories = async (req, res) => {
   try {
     const categories = await Category.find({}).exec();
     res.status(200).json(categories);
-  } catch (err) {
-    res.status(400).json(err);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ alert: "categories is not fetched", Error: error.message });
   }
 };
 
@@ -14,7 +16,9 @@ exports.createCategory = async (req, res) => {
   try {
     const doc = await category.save();
     res.status(201).json(doc);
-  } catch (err) {
-    res.status(400).json(err);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ alert: "category is not created", Error: error.message });
   }
 };

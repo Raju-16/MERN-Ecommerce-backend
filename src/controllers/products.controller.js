@@ -51,8 +51,10 @@ exports.fetchAllProducts = async (req, res) => {
     const docs = await query.exec();
     res.set("X-Total-Count", totalDocs);
     res.status(200).json(docs);
-  } catch (err) {
-    res.status(400).json(err);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ alert: "product is not fetched", Error: error.message });
   }
 };
 
@@ -62,8 +64,10 @@ exports.fetchProductById = async (req, res) => {
   try {
     const product = await Product.findById(id);
     res.status(200).json(product);
-  } catch (err) {
-    res.status(400).json(err);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ alert: "product is not fetched", Error: error.message });
   }
 };
 
@@ -74,7 +78,9 @@ exports.updateProduct = async (req, res) => {
       new: true,
     });
     res.status(200).json(product);
-  } catch (err) {
-    res.status(400).json(err);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ alert: "product is not updated", Error: error.message });
   }
 };
