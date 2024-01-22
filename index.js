@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const dbConnect = require("./src/config/dbConnect");
-const productRouter = require("./src/routes/products.routes");
-const brandRouter = require("./src/routes/brands.routes");
-const categoryRouter = require("./src/routes/categories.routes");
+const productRouter = require("./src/routes/products.route");
+const brandRouter = require("./src/routes/brands.route");
+const categoryRouter = require("./src/routes/categories.route");
 const server = express();
 
 server.use(
