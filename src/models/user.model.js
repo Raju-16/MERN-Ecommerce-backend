@@ -5,10 +5,10 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, required: true, default: "user" },
-    addresses: { type: [Schema.Types.Mixed] },
+    addresses: { type: [mongoose.Schema.Types.Mixed] },
     // TODO:  We can make a separate Schema for this
     name: { type: String },
-    orders: { type: [Schema.Types.Mixed] },
+    orders: { type: [mongoose.Schema.Types.Mixed] },
   },
   {
     timestamps: true,

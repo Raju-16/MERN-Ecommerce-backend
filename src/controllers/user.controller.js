@@ -1,5 +1,14 @@
 const User = require("../models/user.model");
 
+exports.getAllUser = async (req, res) => {
+  try {
+    const user = await User.find();
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
 exports.fetchUserById = async (req, res) => {
   const { id } = req.params;
   console.log(id);
