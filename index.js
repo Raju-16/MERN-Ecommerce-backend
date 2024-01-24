@@ -21,9 +21,9 @@ server.use(express.json()); // to parse req.body
 server.use("/products", productRouter);
 server.use("/brands", brandRouter);
 server.use("/categories", categoryRouter);
-server.use("/user", userRouter);
+server.use("/users", userRouter);
 server.use("/cart", cartRouter);
-server.use("/order", orderRouter);
+server.use("/orders", orderRouter);
 server.use("/auth", authRouter);
 
 server.listen(8080, async () => {
