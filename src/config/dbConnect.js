@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+require("dotenv").config();
 
 const dbConnect = () => {
   try {
-    return mongoose.connect(
-      "mongodb+srv://Raju94:Raju1994@cluster0.wvxeglg.mongodb.net/MERN-backend"
-    );
+    return mongoose.connect(process.env.MONGODB_URL);
   } catch (error) {
     console.log({ message: error.message });
   }
