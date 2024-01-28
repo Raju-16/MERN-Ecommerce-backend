@@ -11,7 +11,7 @@ const orderRouter = express.Router();
 //  /orders is already added in base path
 orderRouter
   .post("/", createOrder)
-  .get("/user/:userId", fetchOrdersByUser)
+  .get("/own", fetchOrdersByUser)
   .delete("/:id", deleteOrder)
   .patch("/:id", updateOrder)
   .get("/", fetchAllOrders);

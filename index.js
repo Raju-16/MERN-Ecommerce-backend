@@ -9,12 +9,12 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const dbConnect = require("./src/config/dbConnect");
 const dotenv = require("dotenv");
-const User = require("./src/models/user.model");
-const { isAuth, sanitizeUser } = require("./src/services/common");
+const cookieParser = require("cookie-parser");
 
 const server = express();
 require("dotenv").config();
 
+const User = require("./src/models/user.model");
 const productRouter = require("./src/routes/products.route");
 const brandRouter = require("./src/routes/brands.route");
 const categoryRouter = require("./src/routes/categories.route");
@@ -22,13 +22,20 @@ const userRouter = require("./src/routes/user.route");
 const cartRouter = require("./src/routes/cart.route");
 const orderRouter = require("./src/routes/order.route");
 const authRouter = require("./src/routes/auth.route");
+const {
+  isAuth,
+  sanitizeUser,
+  cookieExtractor,
+} = require("./src/services/common");
 
 // JWT options
 const opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = process.env.SECRET_KEY; // TODO: should not be in code;
 
 //middlewares
+server.use(express.static("build"));
+server.use(cookieParser());
 server.use(
   session({
     secret: "keyboard cat",
@@ -76,7 +83,7 @@ passport.use(
               return done(null, false, { message: "invalid credentials" });
             }
             const token = jwt.sign(sanitizeUser(user), process.env.SECRET_KEY);
-            done(null, token); // this lines sends to serializer
+            done(null, { token }); // this lines sends to serializer
           }
         );
       } catch (err) {
@@ -91,7 +98,7 @@ passport.use(
   new JwtStrategy(opts, async function (jwt_payload, done) {
     console.log({ jwt_payload });
     try {
-      const user = await User.findOne({ id: jwt_payload.sub });
+      const user = await User.findById(jwt_payload.id);
       if (user) {
         return done(null, sanitizeUser(user)); // this calls serializer
       } else {
