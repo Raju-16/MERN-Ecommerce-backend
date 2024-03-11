@@ -23,7 +23,10 @@ exports.createUser = async (req, res) => {
           if (err) {
             res.status(400).json(err);
           } else {
-            const token = jwt.sign(sanitizeUser(doc), process.env.SECRET_KEY);
+            const token = jwt.sign(
+              sanitizeUser(doc),
+              process.env.JWT_SECRET_KEY
+            );
             res
               .cookie("jwt", token, {
                 expires: new Date(Date.now() + 3600000 * 6),
@@ -41,13 +44,15 @@ exports.createUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
+  const user = req.user;
+  // console.log("user", req.user);
   res
-    .cookie("jwt", req.user.token, {
+    .cookie("jwt", user.token, {
       expires: new Date(Date.now() + 3600000),
       httpOnly: true,
     })
     .status(201)
-    .json(req.user); // this user property is set by passport.js after authentication is done.
+    .json({ id: user.id, role: user.role }); // this user property is set by passport.js after authentication is done.
 };
 
 exports.checkAuth = async (req, res) => {
